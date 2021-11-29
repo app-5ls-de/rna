@@ -27,6 +27,12 @@
         max-width: 50rem;
       }
 
+      .function-plot .top-right-legend,
+      .function-plot .tick text {
+        display: none;
+        display: none;
+      }
+
       @media (min-width: 62rem) {
         h1 {
           position: absolute;
@@ -247,6 +253,19 @@
               />
             </div>
           </div>
+
+          <div class="col-3">
+            <div class="mb-3 was-validated">
+              <label for="input_4fwhm" class="form-label">FWHM</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input_4fwhm"
+                pattern="[0-9]*\.?[0-9]*"
+                value="0.05"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="row">
@@ -280,23 +299,28 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col-6">
+          <div class="col-4">
             <table class="table" id="table_4">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">m/z [u]</th>
-                  <th scope="col">Abundance (% largest)</th>
+                  <th scope="col">
+                    Abundance <br />
+                    (% largest)
+                  </th>
                 </tr>
               </thead>
               <tbody id="table_4body"></tbody>
             </table>
           </div>
+          <div class="col-8" id="plot_4"></div>
         </div>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/gh/PatrickHaussmann/crel@b1d9cf762ee369e626293fb787ce1a7ddae82ee8/crel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/function-plot@1.22.7/dist/function-plot.js"></script>
     <script src="/isoAbund.js"></script>
     <script src="/MolecularFormula.js"></script>
     <script src="/emass.js"></script>

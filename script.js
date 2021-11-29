@@ -26,6 +26,7 @@ const input_3 = crel("#input_3");
 const input_3simplified = crel("#input_3simplified");
 
 const input_4z = crel("#input_4z");
+const input_4fwhm = crel("#input_4fwhm");
 const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
 const table_4body = crel("#table_4body");
@@ -70,11 +71,13 @@ crel(input_3, {
   },
 });
 
-crel(input_4z, {
-  on: {
-    keypress: (e) => onEnter(e, section3),
-    input: section3,
-  },
+[input_4z, input_4fwhm].forEach((element) => {
+  crel(element, {
+    on: {
+      keypress: (e) => onEnter(e, section3),
+      input: section3,
+    },
+  });
 });
 
 function onEnter(e, callback) {
@@ -309,6 +312,51 @@ function section3() {
     );
   }
   table_4body.replaceChildren(...childs);
+
+  let FWHM = parseFloat(input_4fwhm.value);
+  let standardDeviation = FWHM / 2.3548;
+  let important_isotopes = isotopes.filter(
+    (isotope) => isotope.Abundance > 0.01
+  );
+  let important_masses = important_isotopes.map((isotope) => isotope.Mass);
+
+  function fn(scope) {
+    var x = scope.x;
+    let y = 0;
+
+    important_isotopes.forEach((isotope) => {
+      y += gaussian(x, isotope.Mass, standardDeviation) * isotope.Abundance;
+    });
+    return y;
+  }
+
+  let range = [
+    Math.min(...important_masses) - 3 * standardDeviation,
+    Math.max(...important_masses) + 3 * standardDeviation,
+  ];
+  let d = (range[1] - range[0]) * 0.2;
+  range[0] -= d;
+  range[1] += d;
+
+  functionPlot({
+    target: "#plot_4",
+    grid: true,
+    // disableZoom: true,
+    yAxis: { domain: [0, fn({ x: mass_most_abundant })] },
+    xAxis: { domain: range },
+    data: [
+      {
+        graphType: "polyline",
+        fn: fn,
+      },
+    ],
+  });
+}
+
+function gaussian(x, mean, standardDeviation) {
+  return Math.exp(
+    -Math.pow(x - mean, 2) / (2 * Math.pow(standardDeviation, 2))
+  );
 }
 
 setTimeout(() => {
