@@ -270,8 +270,15 @@ function section3() {
   let charge = -1 * parseInt(input_4z.value) || 0;
 
   let formula;
+  let isotopes;
   try {
     formula = new MolecularFormula(sequence);
+    let simplified = formula.getSimplifiedFormula();
+    input_3simplified.value = simplified;
+    formula.subtract({ H: charge });
+
+    isotopes = emass.calculate(formula.composition, charge);
+
     input_3.classList.remove("is-invalid");
     input_3.parentElement.classList.add("was-validated");
   } catch (error) {
@@ -280,11 +287,6 @@ function section3() {
     return;
   }
 
-  let simplified = formula.getSimplifiedFormula();
-  input_3simplified.value = simplified;
-
-  formula.subtract({ H: charge });
-  let isotopes = emass.calculate(formula.composition, charge);
   let avgmass = formula.getMass();
   if (charge > 0) avgmass = avgmass / charge;
 
