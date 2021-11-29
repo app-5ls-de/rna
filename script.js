@@ -21,10 +21,10 @@ const list_input_2 = [
 ];
 
 const input_3 = crel("#input_3");
+const input_3simplified = crel("#input_3simplified");
 
 const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
-const input_4simplified = crel("#input_4simplified");
 
 crel(input_1sequence, {
   on: {
@@ -224,5 +224,5 @@ function section3() {
   let mass = isotopes[0].Mass;
   input_4mass.value = mass;
   input_4avgmass.value = avgmass;
-  input_4simplified.value = simplified;
+  input_3simplified.value = simplified;
 }
