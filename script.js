@@ -97,7 +97,18 @@ function section1() {
   if (!input_1sequence.validity.valid) return;
 
   let sequence = input_1sequence.value.toUpperCase();
-  let formula = new MolecularFormula(sequence);
+
+  let formula;
+  try {
+    formula = new MolecularFormula(sequence);
+    input_1sequence.classList.remove("is-invalid");
+    input_1sequence.parentElement.classList.add("was-validated");
+  } catch (error) {
+    input_1sequence.classList.add("is-invalid");
+    input_1sequence.parentElement.classList.remove("was-validated");
+    return;
+  }
+
   let composition = formula.getComposition();
   console.log(composition);
 
@@ -258,7 +269,17 @@ function section3() {
   let sequence = input_3.value;
   let charge = -1 * parseInt(input_4z.value) || 0;
 
-  let formula = new MolecularFormula(sequence);
+  let formula;
+  try {
+    formula = new MolecularFormula(sequence);
+    input_3.classList.remove("is-invalid");
+    input_3.parentElement.classList.add("was-validated");
+  } catch (error) {
+    input_3.classList.add("is-invalid");
+    input_3.parentElement.classList.remove("was-validated");
+    return;
+  }
+
   let simplified = formula.getSimplifiedFormula();
   input_3simplified.value = simplified;
 
