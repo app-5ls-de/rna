@@ -25,8 +25,10 @@ const input_2GC = crel("#input_2GC");
 const input_3 = crel("#input_3");
 const input_3simplified = crel("#input_3simplified");
 
+const input_4z = crel("#input_4z");
 const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
+const table_4body = crel("#table_4body");
 
 crel(input_1sequence, {
   on: {
@@ -56,6 +58,13 @@ crel(input_3, {
     input: () => {
       disable_inputs([...list_input_2, input_1sequence], section3);
     },
+  },
+});
+
+crel(input_4z, {
+  on: {
+    keypress: (e) => onEnter(e, section3),
+    input: section3,
   },
 });
 
@@ -238,12 +247,31 @@ function section3() {
   if (!input_3.validity.valid) return;
 
   let sequence = input_3.value;
+  let charge = -1 * parseInt(input_4z.value) || 0;
+
   let formula = new MolecularFormula(sequence);
   let simplified = formula.getSimplifiedFormula();
-  let isotopes = emass.calculate(formula.composition, 0);
-  let avgmass = formula.getMass();
-  let mass = isotopes[0].Mass;
-  input_4mass.value = Number.parseFloat(mass).toPrecision(10);
-  input_4avgmass.value = Number.parseFloat(avgmass).toPrecision(10);
   input_3simplified.value = simplified;
+
+  formula.subtract({ H: charge });
+  let isotopes = emass.calculate(formula.composition, charge);
+  let avgmass = formula.getMass();
+  if (charge > 0) avgmass = avgmass / charge;
+  let mass = isotopes[0].Mass;
+
+  input_4mass.value = mass.toPrecision(7);
+  input_4avgmass.value = avgmass.toPrecision(7);
+
+  let childs = [];
+  for (let i = 0; i < isotopes.length; i++) {
+    const isotope = isotopes[i];
+    childs.push(
+      crel.tr(
+        crel.th({ scope: "row" }, i.toString()),
+        crel.td(isotope.Mass.toPrecision(7)),
+        crel.td((isotope.Abundance * 100).toPrecision(3))
+      )
+    );
+  }
+  table_4body.replaceChildren(...childs);
 }

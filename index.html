@@ -229,9 +229,25 @@
       </div>
 
       <hr />
-      <div class="section container-fluid">
+      <div class="section container-fluid" style="min-height: 30rem">
         <h1 id="section4">4</h1>
         <h2>Mass</h2>
+
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3 was-validated">
+              <label for="input_4z" class="form-label">Charge</label>
+              <input
+                type="number"
+                class="form-control"
+                id="input_4z"
+                max="0"
+                step="1"
+                value="0"
+              />
+            </div>
+          </div>
+        </div>
 
         <div class="row">
           <label for="input_4mass" class="col-sm-3 col-form-label"
@@ -248,7 +264,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-3">
           <label for="input_4avgmass" class="col-sm-3 col-form-label"
             >Average mass [u]</label
           >
@@ -260,6 +276,21 @@
               id="input_4avgmass"
               value=""
             />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <table class="table" id="table_4">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">m/z [u]</th>
+                  <th scope="col">Abundance (% largest)</th>
+                </tr>
+              </thead>
+              <tbody id="table_4body"></tbody>
+            </table>
           </div>
         </div>
       </div>
