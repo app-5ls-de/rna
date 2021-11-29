@@ -156,7 +156,7 @@ function section2() {
   )
     return;
 
-  let formula_Cy5 = "C37H49N3O4P";
+  let formula_Cy5 = "C37H48N3O4P";
 
   let formulas_Pcyc = {
     G: "C10H12N5O7P",
