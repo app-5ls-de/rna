@@ -19,6 +19,8 @@ const list_input_2 = [
   input_2Pcyc,
   input_2P23,
 ];
+const input_2Tm = crel("#input_2Tm");
+const input_2GC = crel("#input_2GC");
 
 const input_3 = crel("#input_3");
 const input_3simplified = crel("#input_3simplified");
@@ -153,11 +155,30 @@ function section2() {
   let result = "";
   let suffix = "";
   let values = {
-    G: input_2g.value,
-    C: input_2c.value,
-    A: input_2a.value,
-    U: input_2u.value,
+    G: parseInt(input_2g.value),
+    C: parseInt(input_2c.value),
+    A: parseInt(input_2a.value),
+    U: parseInt(input_2u.value),
   };
+
+  let total_length = Object.values(values).reduce(
+    (total, current) => total + current,
+    0
+  );
+
+  let gc_content = ((values.G + values.C) / total_length) * 100;
+  input_2GC.value = Number.parseFloat(gc_content).toPrecision(3);
+
+  let T_m;
+  if (total_length < 14) {
+    // Marmur formula
+    T_m = (values.A + values.U) * 2 + (values.G + values.C) * 4;
+  } else {
+    // Wallace formula
+    T_m = 64.9 + 41 * ((values.G + values.C - 16.4) / total_length);
+  }
+
+  input_2Tm.value = Number.parseFloat(T_m).toPrecision(2);
 
   let last_non_zero;
   for (const nucleotide in values) {
@@ -222,7 +243,7 @@ function section3() {
   let isotopes = emass.calculate(formula.composition, 0);
   let avgmass = formula.getMass();
   let mass = isotopes[0].Mass;
-  input_4mass.value = mass;
-  input_4avgmass.value = avgmass;
+  input_4mass.value = Number.parseFloat(mass).toPrecision(10);
+  input_4avgmass.value = Number.parseFloat(avgmass).toPrecision(10);
   input_3simplified.value = simplified;
 }
