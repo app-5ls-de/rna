@@ -8,7 +8,7 @@ const input_2u = crel("#input_2u");
 const input_2Cy5 = crel("#input_2Cy5");
 const input_2noP = crel("#input_2noP");
 const input_2Pcyc = crel("#input_2Pcyc");
-const input_2P235 = crel("#input_2P235");
+const input_2P23 = crel("#input_2P23");
 const list_input_2 = [
   input_2g,
   input_2c,
@@ -17,7 +17,7 @@ const list_input_2 = [
   input_2Cy5,
   input_2noP,
   input_2Pcyc,
-  input_2P235,
+  input_2P23,
 ];
 
 const input_3 = crel("#input_3");
@@ -171,7 +171,7 @@ function section2() {
       values[last_non_zero] -= 1;
       suffix = " (" + formulas_noP[last_non_zero] + ")";
     }
-  } else if (input_2P235.checked) {
+  } else if (input_2P23.checked) {
     if (last_non_zero) {
       values[last_non_zero] -= 1;
       suffix = " (" + formulas_P235[last_non_zero] + ")";
