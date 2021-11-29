@@ -184,10 +184,12 @@ window.MolecularFormula = class MolecularFormula {
 
       var elemList = this.createElemList(partial);
       var newPartial = "";
-      if (multiplier !== 0) {
-        for (var i = 0; i < elemList.length; i++) {
-          newPartial += elemList[i][0];
-          newPartial += elemList[i][1] * multiplier;
+      if (partial.length > 0 && !this.isNumber(partial)) {
+        if (multiplier !== 0) {
+          for (var i = 0; i < elemList.length; i++) {
+            newPartial += elemList[i][0];
+            newPartial += elemList[i][1] * multiplier;
+          }
         }
       }
 
