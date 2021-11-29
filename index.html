@@ -47,10 +47,25 @@
           <input
             type="text"
             class="form-control"
-            id="input_1"
+            id="input_1sequence"
             pattern="[gcauGCAU0-9() ]*"
           />
           <span class="input-group-text">3'</span>
+        </div>
+
+        <div class="row mb-3">
+          <label for="input_1rc" class="col-sm-3 col-form-label"
+            >Reverse Complement</label
+          >
+          <div class="col-sm-9">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="input_1rc"
+              value=""
+            />
+          </div>
         </div>
       </div>
 

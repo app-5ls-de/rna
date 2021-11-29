@@ -1,4 +1,5 @@
-const input_1 = crel("#input_1");
+const input_1sequence = crel("#input_1sequence");
+const input_1rc = crel("#input_1rc");
 
 const input_2g = crel("#input_2g");
 const input_2c = crel("#input_2c");
@@ -25,7 +26,7 @@ const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
 const input_4simplified = crel("#input_4simplified");
 
-crel(input_1, {
+crel(input_1sequence, {
   on: {
     keypress: (e) => onEnter(e, section1),
     input: section1,
@@ -35,9 +36,10 @@ crel(input_1, {
 list_input_2.forEach((element) => {
   crel(element, {
     on: {
-      keypress: (e) => onEnter(e, () => disable_inputs([input_1], section2)),
+      keypress: (e) =>
+        onEnter(e, () => disable_inputs([input_1sequence], section2)),
       input: () => {
-        disable_inputs([input_1], section2);
+        disable_inputs([input_1sequence], section2);
       },
     },
   });
@@ -46,9 +48,11 @@ list_input_2.forEach((element) => {
 crel(input_3, {
   on: {
     keypress: (e) =>
-      onEnter(e, () => disable_inputs([...list_input_2, input_1], section3)),
+      onEnter(e, () =>
+        disable_inputs([...list_input_2, input_1sequence], section3)
+      ),
     input: () => {
-      disable_inputs([...list_input_2, input_1], section3);
+      disable_inputs([...list_input_2, input_1sequence], section3);
     },
   },
 });
@@ -70,9 +74,9 @@ function disable_inputs(inputs, callback) {
 }
 
 function section1() {
-  if (!input_1.validity.valid) return;
+  if (!input_1sequence.validity.valid) return;
 
-  let sequence = input_1.value.toUpperCase();
+  let sequence = input_1sequence.value.toUpperCase();
   let formula = new MolecularFormula(sequence);
   let composition = formula.getComposition();
   console.log(composition);
@@ -81,6 +85,33 @@ function section1() {
   input_2c.value = composition.C || 0;
   input_2a.value = composition.A || 0;
   input_2u.value = composition.U || 0;
+
+  let nucleotides_reverse = sequence.split("").reverse();
+  let nucleotides_reverse_complement = [];
+
+  let complement_pairs = {
+    G: "C",
+    C: "G",
+    A: "U",
+    U: "A",
+    ")": "(",
+    "(": ")",
+    " ": " ",
+  };
+
+  let invalid_chars = false;
+  nucleotides_reverse.forEach((nucleotide) => {
+    if (Object.keys(complement_pairs).includes(nucleotide)) {
+      nucleotides_reverse_complement.push(complement_pairs[nucleotide]);
+    } else {
+      invalid_chars = true;
+    }
+  });
+  if (!invalid_chars) {
+    input_1rc.value = nucleotides_reverse_complement.join("");
+  } else {
+    input_1rc.value = "";
+  }
 
   section2();
 }
