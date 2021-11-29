@@ -176,7 +176,7 @@ function section2() {
   );
 
   let gc_content = ((values.G + values.C) / total_length) * 100;
-  input_2GC.value = Number.parseFloat(gc_content).toPrecision(3);
+  input_2GC.value = gc_content.toPrecision(3);
 
   let T_m;
   if (total_length < 14) {
@@ -187,7 +187,7 @@ function section2() {
     T_m = 64.9 + 41 * ((values.G + values.C - 16.4) / total_length);
   }
 
-  input_2Tm.value = Number.parseFloat(T_m).toPrecision(2);
+  input_2Tm.value = T_m.toPrecision(2);
 
   let last_non_zero;
   for (const nucleotide in values) {
