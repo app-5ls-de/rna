@@ -257,9 +257,12 @@ function section3() {
   let isotopes = emass.calculate(formula.composition, charge);
   let avgmass = formula.getMass();
   if (charge > 0) avgmass = avgmass / charge;
-  let mass = isotopes[0].Mass;
 
-  input_4mass.value = mass.toPrecision(7);
+  let abundances = isotopes.map((isotope) => isotope.Abundance);
+  let index_most_abundant = abundances.indexOf(Math.max(...abundances));
+  let mass_most_abundant = isotopes[index_most_abundant].Mass;
+
+  input_4mass.value = mass_most_abundant.toPrecision(7);
   input_4avgmass.value = avgmass.toPrecision(7);
 
   let childs = [];
