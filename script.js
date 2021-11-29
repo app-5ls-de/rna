@@ -40,10 +40,19 @@ crel(input_1sequence, {
 list_input_2.forEach((element) => {
   crel(element, {
     on: {
-      keypress: (e) =>
-        onEnter(e, () => disable_inputs([input_1sequence], section2)),
+      keypress: (e) => onEnter(e, section2),
+      input: section2,
+    },
+  });
+});
+
+[input_2g, input_2c, input_2a, input_2u].forEach((element) => {
+  crel(element, {
+    on: {
       input: () => {
-        disable_inputs([input_1sequence], section2);
+        disable_inputs([input_1sequence], () => {
+          input_1sequence.value = "";
+        });
       },
     },
   });
@@ -279,4 +288,10 @@ function section3() {
   table_4body.replaceChildren(...childs);
 }
 
-setTimeout(section1, 0);
+setTimeout(() => {
+  if (input_1sequence.value) {
+    section1();
+  } else {
+    section2();
+  }
+}, 0);
