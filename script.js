@@ -275,3 +275,5 @@ function section3() {
   }
   table_4body.replaceChildren(...childs);
 }
+
+setTimeout(section1, 0);
