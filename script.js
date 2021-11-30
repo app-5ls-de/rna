@@ -396,14 +396,16 @@ function section3() {
   width *= ratio;
   height *= ratio;
 
-  functionPlot({
+  let y_padding = 5;
+  let y_max = fn({ x: mass_most_abundant });
+  let options = {
     target: "#plot_4",
     width,
     height,
     grid: true,
     // disableZoom: true,
     yAxis: {
-      domain: [0, fn({ x: mass_most_abundant })],
+      domain: [-y_padding, y_max + y_padding],
       label: "%",
     },
     xAxis: {
@@ -416,6 +418,26 @@ function section3() {
         fn: fn,
       },
     ],
+  };
+
+  let instance = functionPlot(options);
+
+  let rect = document
+    .getElementsByClassName("function-plot")[0]
+    .getElementsByClassName("zoom-and-drag")[0];
+  let old_domain = options.yAxis.domain;
+  crel(rect, {
+    on: {
+      pointerout: () => {
+        old_domain = options.yAxis.domain;
+        options.yAxis.domain = [-y_padding, y_max + y_padding];
+        functionPlot(options);
+      },
+      pointerenter: () => {
+        options.yAxis.domain = old_domain;
+        functionPlot(options);
+      },
+    },
   });
 }
 
