@@ -32,6 +32,7 @@ const input_4z = crel("#input_4z");
 const input_4fwhm = crel("#input_4fwhm");
 const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
+const input_4adducts = crel("#input_4adducts");
 const table_4body = crel("#table_4body");
 
 crel(input_1sequence, {
@@ -75,7 +76,7 @@ crel(input_3, {
   },
 });
 
-[input_4z, input_4fwhm].forEach((element) => {
+[input_4z, input_4fwhm, input_4adducts].forEach((element) => {
   crel(element, {
     on: {
       keypress: (e) => onEnter(e, section3),
@@ -340,11 +341,40 @@ function section3() {
   );
   let important_masses = important_isotopes.map((isotope) => isotope.Mass);
 
+  let isotopes_with_adducts = important_isotopes;
+  if (input_4adducts.checked) {
+    formula.add("K");
+    formula.subtract("H");
+    isotopes = emass.calculate(formula.composition, charge);
+
+    isotopes.forEach((isotope) => {
+      isotope.Abundance *= 0.08;
+    });
+    isotopes_with_adducts.push(...isotopes);
+    formula.subtract("K");
+    formula.add("H");
+
+    for (let i = 1; i < 4; i++) {
+      formula.add("Na");
+      formula.subtract("H");
+      isotopes = emass.calculate(formula.composition, charge);
+
+      isotopes.forEach((isotope) => {
+        isotope.Abundance *= Math.pow(0.4, i);
+      });
+      isotopes_with_adducts.push(...isotopes);
+    }
+  }
+
+  let important_isotopes_with_adducts = isotopes_with_adducts.filter(
+    (isotope) => isotope.Abundance > 0.01
+  );
+
   function fn(scope) {
     var x = scope.x;
     let y = 0;
 
-    important_isotopes.forEach((isotope) => {
+    important_isotopes_with_adducts.forEach((isotope) => {
       y += gaussian(x, isotope.Mass, standardDeviation) * isotope.Abundance;
     });
     return y * 100;
