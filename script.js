@@ -54,9 +54,7 @@ list_input_2.forEach((element) => {
   crel(element, {
     on: {
       input: () => {
-        disable_inputs([input_1sequence], () => {
-          input_1sequence.value = "";
-        });
+        disable_inputs([input_1sequence, input_1rc, input_1r, input_1c]);
       },
     },
   });
