@@ -54,6 +54,7 @@
             type="text"
             class="form-control"
             id="input_1sequence"
+            name="input_1sequence"
             pattern="[gcauGCAU0-9() ]*"
           />
           <span class="input-group-text">3'</span>
@@ -69,6 +70,37 @@
               readonly
               class="form-control-plaintext"
               id="input_1rc"
+              name="input_1rc"
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="input_1r" class="col-sm-3 col-form-label">Reverse</label>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="input_1r"
+              name="input_1r"
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="input_1c" class="col-sm-3 col-form-label"
+            >Complement</label
+          >
+          <div class="col-sm-9">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="input_1c"
+              name="input_1c"
               value=""
             />
           </div>
@@ -88,6 +120,7 @@
                 type="number"
                 class="form-control"
                 id="input_2g"
+                name="input_2g"
                 min="0"
                 step="1"
                 value="0"
@@ -101,6 +134,7 @@
                 type="number"
                 class="form-control"
                 id="input_2c"
+                name="input_2c"
                 min="0"
                 step="1"
                 value="0"
@@ -114,6 +148,7 @@
                 type="number"
                 class="form-control"
                 id="input_2a"
+                name="input_2a"
                 min="0"
                 step="1"
                 value="0"
@@ -127,6 +162,7 @@
                 type="number"
                 class="form-control"
                 id="input_2u"
+                name="input_2u"
                 min="0"
                 step="1"
                 value="0"
@@ -136,7 +172,12 @@
         </div>
 
         <div class="mb-3">
-          <input type="checkbox" class="form-check-input" id="input_2Cy5" />
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="input_2Cy5"
+            name="input_2Cy5"
+          />
           <label class="form-check-label" for="input_2Cy5"
             >Cy5-Modification 5'</label
           >
@@ -149,6 +190,7 @@
               type="radio"
               name="PEndRadio"
               id="input_2noP"
+              name="input_2noP"
               checked
             />
             <label class="form-check-label" for="input_2noP"> 3' noP </label>
@@ -159,6 +201,7 @@
               type="radio"
               name="PEndRadio"
               id="input_2Pcyc"
+              name="input_2Pcyc"
             />
             <label class="form-check-label" for="input_2Pcyc"> 3' Pcyc </label>
           </div>
@@ -168,6 +211,7 @@
               type="radio"
               name="PEndRadio"
               id="input_2P23"
+              name="input_2P23"
             />
             <label class="form-check-label" for="input_2P23"> 3' P23 </label>
           </div>
@@ -183,6 +227,7 @@
               readonly
               class="form-control-plaintext"
               id="input_2Tm"
+              name="input_2Tm"
               value=""
             />
           </div>
@@ -198,6 +243,23 @@
               readonly
               class="form-control-plaintext"
               id="input_2GC"
+              name="input_2GC"
+              value=""
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="input_2length" class="col-sm-3 col-form-label"
+            >Length</label
+          >
+          <div class="col-sm-9">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="input_2length"
+              name="input_2length"
               value=""
             />
           </div>
@@ -215,6 +277,7 @@
             class="form-control"
             pattern="[a-zA-Z0-9() +-]*"
             id="input_3"
+            name="input_3"
           />
         </div>
 
@@ -228,6 +291,7 @@
               readonly
               class="form-control-plaintext"
               id="input_3simplified"
+              name="input_3simplified"
               value=""
             />
           </div>
@@ -247,6 +311,7 @@
                 type="number"
                 class="form-control"
                 id="input_4z"
+                name="input_4z"
                 max="0"
                 step="1"
                 value="0"
@@ -261,6 +326,7 @@
                 type="text"
                 class="form-control"
                 id="input_4fwhm"
+                name="input_4fwhm"
                 pattern="[0-9]*\.?[0-9]*"
                 value="0.05"
               />
@@ -278,6 +344,7 @@
               readonly
               class="form-control-plaintext"
               id="input_4mass"
+              name="input_4mass"
               value=""
             />
           </div>
@@ -293,6 +360,7 @@
               readonly
               class="form-control-plaintext"
               id="input_4avgmass"
+              name="input_4avgmass"
               value=""
             />
           </div>
