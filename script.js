@@ -34,6 +34,7 @@ const input_4mass = crel("#input_4mass");
 const input_4avgmass = crel("#input_4avgmass");
 const input_4adducts = crel("#input_4adducts");
 const table_4body = crel("#table_4body");
+const plot_4 = crel("#plot_4");
 
 crel(input_1sequence, {
   on: {
@@ -388,8 +389,17 @@ function section3() {
   range[0] -= d;
   range[1] += d;
 
+  let contentsBounds = plot_4.getBoundingClientRect();
+  let width = 800;
+  let height = 500;
+  let ratio = contentsBounds.width / width;
+  width *= ratio;
+  height *= ratio;
+
   functionPlot({
     target: "#plot_4",
+    width,
+    height,
     grid: true,
     // disableZoom: true,
     yAxis: {
