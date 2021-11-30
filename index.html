@@ -46,7 +46,7 @@
         <h1 id="section1">1</h1>
         <h2>Sequence</h2>
 
-        <div class="input-group mb-3 was-validated">
+        <div class="input-group mb-3 flex-nowrap was-validated">
           <span class="input-group-text">5'</span>
           <input
             type="text"
@@ -63,28 +63,36 @@
             >Reverse Complement</label
           >
           <div class="col-sm-9">
+            <div class="input-group mb-3 flex-nowrap">
+              <span class="input-group-text">3'</span>
             <input
               type="text"
               readonly
-              class="form-control-plaintext"
+                class="form-control bg-white"
               id="input_1rc"
               name="input_1rc"
               value=""
             />
+              <span class="input-group-text">5'</span>
+            </div>
           </div>
         </div>
 
         <div class="row">
           <label for="input_1r" class="col-sm-3 col-form-label">Reverse</label>
           <div class="col-sm-9">
+            <div class="input-group mb-3 flex-nowrap">
+              <span class="input-group-text">3'</span>
             <input
               type="text"
               readonly
-              class="form-control-plaintext"
+                class="form-control bg-white"
               id="input_1r"
               name="input_1r"
               value=""
             />
+              <span class="input-group-text">5'</span>
+            </div>
           </div>
         </div>
 
@@ -93,14 +101,18 @@
             >Complement</label
           >
           <div class="col-sm-9">
+            <div class="input-group mb-3 flex-nowrap">
+              <span class="input-group-text">5'</span>
             <input
               type="text"
               readonly
-              class="form-control-plaintext"
+                class="form-control bg-white"
               id="input_1c"
               name="input_1c"
               value=""
             />
+              <span class="input-group-text">3'</span>
+            </div>
           </div>
         </div>
       </div>
