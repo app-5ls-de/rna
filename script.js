@@ -280,7 +280,12 @@ function section2() {
 }
 
 function section3() {
-  if (!input_3.validity.valid) return;
+  if (
+    !input_3.validity.valid ||
+    !input_4z.validity.valid ||
+    !input_4fwhm.validity.valid
+  )
+    return;
 
   let sequence = input_3.value;
   let charge = -1 * parseInt(input_4z.value) || 0;
@@ -291,8 +296,8 @@ function section3() {
     formula = new MolecularFormula(sequence);
     let simplified = formula.getSimplifiedFormula();
     input_3simplified.value = simplified;
-    formula.subtract({ H: charge });
 
+    formula.subtract({ H: charge });
     isotopes = emass.calculate(formula.composition, charge);
 
     input_3.classList.remove("is-invalid");
