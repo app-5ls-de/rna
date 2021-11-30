@@ -342,7 +342,7 @@ function section3() {
     important_isotopes.forEach((isotope) => {
       y += gaussian(x, isotope.Mass, standardDeviation) * isotope.Abundance;
     });
-    return y;
+    return y * 100;
   }
 
   let range = [
@@ -357,8 +357,14 @@ function section3() {
     target: "#plot_4",
     grid: true,
     // disableZoom: true,
-    yAxis: { domain: [0, fn({ x: mass_most_abundant })] },
-    xAxis: { domain: range },
+    yAxis: {
+      domain: [0, fn({ x: mass_most_abundant })],
+      label: "%",
+    },
+    xAxis: {
+      label: "[u]",
+      domain: range,
+    },
     data: [
       {
         graphType: "polyline",
