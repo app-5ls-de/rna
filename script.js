@@ -23,6 +23,7 @@ const list_input_2 = [
 ];
 const input_2Tm = crel("#input_2Tm");
 const input_2GC = crel("#input_2GC");
+const input_2length = crel("#input_2length");
 
 const input_3 = crel("#input_3");
 const input_3simplified = crel("#input_3simplified");
@@ -212,7 +213,7 @@ function section2() {
     (total, current) => total + current,
     0
   );
-
+  input_2length.value = total_length.toString();
   let gc_content = ((values.G + values.C) / total_length) * 100;
   input_2GC.value = gc_content.toPrecision(3);
 
