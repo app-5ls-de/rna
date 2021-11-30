@@ -316,13 +316,15 @@ function section3() {
   let childs = [];
   for (let i = 0; i < isotopes.length; i++) {
     const isotope = isotopes[i];
+    let row;
     childs.push(
-      crel.tr(
+      (row = crel.tr(
         crel.th({ scope: "row" }, i.toString()),
         crel.td(isotope.Mass.toPrecision(7)),
         crel.td((isotope.Abundance * 100).toPrecision(3))
-      )
+      ))
     );
+    if (i == index_most_abundant) row.classList.add("text-primary");
   }
   table_4body.replaceChildren(...childs);
 
