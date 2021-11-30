@@ -38,6 +38,9 @@ crel(input_1sequence, {
   on: {
     keypress: (e) => onEnter(e, section1),
     input: section1,
+    blur: () => {
+      input_1sequence.value = input_1sequence.value.toUpperCase();
+    },
   },
 });
 
