@@ -1,5 +1,7 @@
 const input_1sequence = crel("#input_1sequence");
 const input_1rc = crel("#input_1rc");
+const input_1r = crel("#input_1r");
+const input_1c = crel("#input_1c");
 
 const input_2g = crel("#input_2g");
 const input_2c = crel("#input_2c");
@@ -120,32 +122,45 @@ function section1() {
   input_2a.value = composition.A || 0;
   input_2u.value = composition.U || 0;
 
-  let nucleotides_reverse = sequence.split("").reverse();
-  let nucleotides_reverse_complement = [];
+  let sequence_split = sequence.split("");
+  let sequence_reversed = sequence_split.reverse().join("");
+  let sequence_complement;
+  let sequence_complement_split = [];
 
-  let complement_pairs = {
-    G: "C",
-    C: "G",
-    A: "U",
-    U: "A",
-    ")": "(",
-    "(": ")",
+  let complement_pairs = [
+    ["G", "C"],
+    ["A", "U"],
+    ["(", ")"],
+  ];
+  let complement_lookup = {
     " ": " ",
   };
+  complement_pairs.forEach((pair) => {
+    complement_lookup[pair[0]] = pair[1];
+    complement_lookup[pair[1]] = pair[0];
+  });
 
   let invalid_chars = false;
-  nucleotides_reverse.forEach((nucleotide) => {
-    if (Object.keys(complement_pairs).includes(nucleotide)) {
-      nucleotides_reverse_complement.push(complement_pairs[nucleotide]);
+  sequence_split.forEach((nucleotide) => {
+    if (Object.keys(complement_lookup).includes(nucleotide)) {
+      sequence_complement_split.push(complement_lookup[nucleotide]);
     } else {
       invalid_chars = true;
     }
   });
-  if (!invalid_chars) {
-    input_1rc.value = nucleotides_reverse_complement.join("");
-  } else {
+  if (invalid_chars) {
     input_1rc.value = "";
+    input_1r.value = "";
+    input_1c.value = "";
+    return;
   }
+
+  sequence_complement = sequence_complement_split.join("");
+  sequence_reversed_complement = sequence_complement_split.reverse().join("");
+
+  input_1rc.value = sequence_reversed_complement;
+  input_1r.value = sequence_reversed;
+  input_1c.value = sequence_complement;
 
   section2();
 }
