@@ -403,7 +403,6 @@ function section3() {
     width,
     height,
     grid: true,
-    // disableZoom: true,
     yAxis: {
       domain: [-y_padding, y_max + y_padding],
       label: "%",
