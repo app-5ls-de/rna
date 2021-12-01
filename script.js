@@ -8,18 +8,18 @@ const input_2c = crel("#input_2c");
 const input_2a = crel("#input_2a");
 const input_2u = crel("#input_2u");
 const input_2Cy5 = crel("#input_2Cy5");
-const input_2noP = crel("#input_2noP");
-const input_2Pcyc = crel("#input_2Pcyc");
-const input_2P23 = crel("#input_2P23");
+const input_2_3_noP = crel("#input_2_3_noP");
+const input_2_3_Pcyc = crel("#input_2_3_Pcyc");
+const input_2_3_P23 = crel("#input_2_3_P23");
 const list_input_2 = [
   input_2g,
   input_2c,
   input_2a,
   input_2u,
   input_2Cy5,
-  input_2noP,
-  input_2Pcyc,
-  input_2P23,
+  input_2_3_noP,
+  input_2_3_Pcyc,
+  input_2_3_P23,
 ];
 const input_2Tm = crel("#input_2Tm");
 const input_2GC = crel("#input_2GC");
@@ -234,12 +234,12 @@ function section2() {
     }
   }
 
-  if (input_2noP.checked) {
+  if (input_2_3_noP.checked) {
     if (last_non_zero) {
       values[last_non_zero] -= 1;
       suffix = " (" + formulas_noP[last_non_zero] + ")";
     }
-  } else if (input_2P23.checked) {
+  } else if (input_2_3_P23.checked) {
     if (last_non_zero) {
       values[last_non_zero] -= 1;
       suffix = " (" + formulas_P235[last_non_zero] + ")";
