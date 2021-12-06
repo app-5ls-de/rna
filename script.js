@@ -126,41 +126,9 @@ function section1() {
   input_2a.value = composition.A || 0;
   input_2u.value = composition.U || 0;
 
-  let sequence_split = sequence.split("");
-  let sequence_reversed = sequence_split.slice().reverse().join("");
-  let sequence_complement;
-  let sequence_complement_split = [];
-
-  let complement_pairs = [
-    ["G", "C"],
-    ["A", "U"],
-  ];
-  let complement_lookup = {
-    " ": " ",
-    "(": "(",
-    ")": ")",
-  };
-  complement_pairs.forEach((pair) => {
-    complement_lookup[pair[0]] = pair[1];
-    complement_lookup[pair[1]] = pair[0];
-  });
-
-  sequence_split.forEach((nucleotide) => {
-    if (Object.keys(complement_lookup).includes(nucleotide)) {
-      sequence_complement_split.push(complement_lookup[nucleotide]);
-    } else {
-      sequence_complement_split.push(nucleotide);
-    }
-  });
-  sequence_complement = sequence_complement_split.join("");
-  sequence_reversed_complement = sequence_complement_split
-    .slice()
-    .reverse()
-    .join("");
-
-  input_1rc.value = sequence_reversed_complement;
-  input_1r.value = sequence_reversed;
-  input_1c.value = sequence_complement;
+  input_1rc.value = reverse(complement(sequence));
+  input_1r.value = reverse(sequence);
+  input_1c.value = complement(sequence);
 
   section2();
 }
