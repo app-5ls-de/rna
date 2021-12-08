@@ -1,4 +1,4 @@
-function complement(sequence, ignore_invalid_chars = true) {
+function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
     ["G", "C"],
     ["A", "U"],
@@ -20,7 +20,7 @@ function complement(sequence, ignore_invalid_chars = true) {
   sequence.split("").forEach((nucleotide) => {
     if (Object.keys(complement_lookup).includes(nucleotide)) {
       sequence_complement_split.push(complement_lookup[nucleotide]);
-    } else if (ignore_invalid_chars) {
+    } else if (copy_invalid_chars) {
       sequence_complement_split.push(nucleotide);
     } else {
       throw new Error("invalid char in sequence");
