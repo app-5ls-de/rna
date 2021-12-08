@@ -279,7 +279,7 @@ function section3() {
   }
 
   let avgmass = formula.getMass();
-  if (charge > 0) avgmass = avgmass / charge;
+  if (charge > 0) avgmass = avgmass / charge - 1;
 
   let abundances = isotopes.map((isotope) => isotope.Abundance);
   let index_most_abundant = abundances.indexOf(Math.max(...abundances));
