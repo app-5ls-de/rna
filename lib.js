@@ -1,3 +1,5 @@
+const reverse = (sequence) => sequence.split("").reverse().join("");
+
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
     ["G", "C"],
