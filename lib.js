@@ -38,27 +38,27 @@ function complement(sequence, copy_invalid_chars = true) {
   return sequence_complement_split.join("");
 }
 
-function isotope_distribution(formulas, charge = 0) {
-  let list;
-  if (Array.isArray(formulas)) {
-    list = formulas.map((f) => (f.length == 2 ? f : [f, 1]));
-  } else {
-    list = [[formulas, 1]];
-  }
-
-  list = list.map(([formula, amount]) => [
-    new MolecularFormula(formula),
-    amount,
-  ]);
-
-  let isotopes = [];
-  list.forEach(([formula, factor]) =>
-    isotopes.push(
-      emass
-        .calculate(formula.composition, charge)
-        .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
+const get_isotopes = (formula, charge = 0, factor = 1, show_formula = false) =>
+  emass
+    .calculate(
+      new MolecularFormula(formula).subtract({ H: charge }).composition,
+      charge
     )
-  );
+    .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
+    .map((isotope) => {
+      if (show_formula) isotope.formula = new MolecularFormula(formula).formula;
+      return isotope;
+    });
 
-  return isotopes;
-}
+const get_isotopes_list = (
+  formulas,
+  charge,
+  limit = 0.000001 /* PruneLimit */
+) =>
+  formulas
+    .map((f) =>
+      get_isotopes(f.formula || f, f.charge || charge, f.factor, true)
+    )
+    .reduce((pv, cv) => [...pv, ...cv], [])
+    .sort((a, b) => b.Abundance - a.Abundance)
+    .filter(({ Abundance }) => Abundance >= limit);
