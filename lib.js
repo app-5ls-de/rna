@@ -1,4 +1,10 @@
 const reverse = (sequence) => sequence.split("").reverse().join("");
+const normalize_sequence = (sequence) =>
+  new MolecularFormula(sequence.toUpperCase()).getLongFormula();
+const is_normalized_sequence = (sequence) =>
+  new RegExp("^[AUGC ]+$").test(sequence);
+const is_sequence = (sequence) =>
+  is_normalized_sequence(normalize_sequence(sequence));
 
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
