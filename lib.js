@@ -38,7 +38,6 @@ function complement(sequence, copy_invalid_chars = true) {
   return sequence_complement_split.join("");
 }
 
-
 function isotope_distribution(formulas, charge = 0) {
   let list;
   if (Array.isArray(formulas)) {
@@ -46,7 +45,7 @@ function isotope_distribution(formulas, charge = 0) {
       typeof formula == "string" ? [formula, 1] : formula
     );
   } else {
-    list = [formulas, 1];
+    list = [[formulas, 1]];
   }
   let isotopes = [];
 
