@@ -1,4 +1,4 @@
-let isotopes = {
+const all_isotopes = {
   H: {
     Mass: 1.00794,
     Isotopes: [
@@ -93,7 +93,8 @@ let isotopes = {
 };
 
 window.isoAbund = function (element) {
-  if (!(element in isotopes)) return {};
+  if (!(element in all_isotopes))
+    throw new Error('element "' + element + '" not found');
 
-  return isotopes[element];
+  return all_isotopes[element];
 };
