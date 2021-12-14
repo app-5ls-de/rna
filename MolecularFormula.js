@@ -1,8 +1,3 @@
-// changes compared to the original:
-// 1. lines 179-182
-// 2. lines 187-192
-// 3. lines 89-94
-
 window.MolecularFormula = class MolecularFormula {
   constructor(mf) {
     this.formula = mf.replace(/[⁰¹²³⁴-⁹₀-₉]/g, function (char) {
@@ -31,6 +26,16 @@ window.MolecularFormula = class MolecularFormula {
 
   getSimplifiedFormula() {
     return this.simplifiedFormula;
+  }
+
+  getExpanded() {
+    return this.cleanParantheses(this.formula);
+  }
+
+  getLongFormula() {
+    var expanded = this.getExpanded();
+    var elemList = this.createElemList(expanded);
+    return elemList.reduce((pv, [atom, count]) => pv + atom.repeat(count), ""); // atom count
   }
 
   addComposition(composition) {
