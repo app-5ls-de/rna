@@ -41,9 +41,7 @@ function complement(sequence, copy_invalid_chars = true) {
 function isotope_distribution(formulas, charge = 0) {
   let list;
   if (Array.isArray(formulas)) {
-    list = formulas_list.map((formula) =>
-      typeof formula == "string" ? [formula, 1] : formula
-    );
+    list = formulas.map((f) => (f.length == 2 ? f : [f, 1]));
   } else {
     list = [[formulas, 1]];
   }
