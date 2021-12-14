@@ -47,12 +47,17 @@ function isotope_distribution(formulas, charge = 0) {
   } else {
     list = [[formulas, 1]];
   }
-  let isotopes = [];
 
+  list = list.map(([formula, amount]) => [
+    new MolecularFormula(formula),
+    amount,
+  ]);
+
+  let isotopes = [];
   list.forEach(([formula, factor]) =>
     isotopes.push(
       emass
-        .calculate(formula, charge)
+        .calculate(formula.composition, charge)
         .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
     )
   );
