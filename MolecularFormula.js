@@ -76,6 +76,8 @@ window.MolecularFormula = class MolecularFormula {
     this.addComposition(composition);
     this.simplifiedFormula = this.createSimplifiedFormula();
     this.formula = this.simplifiedFormula;
+
+    return this;
   }
 
   subtract(new_formula) {
@@ -89,6 +91,8 @@ window.MolecularFormula = class MolecularFormula {
     this.subtractComposition(composition);
     this.simplifiedFormula = this.createSimplifiedFormula();
     this.formula = this.simplifiedFormula;
+
+    return this;
   }
 
   createSimplifiedFormula() {
