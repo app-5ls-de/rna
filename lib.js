@@ -38,6 +38,25 @@ function complement(sequence, copy_invalid_chars = true) {
   return sequence_complement_split.join("");
 }
 
-function reverse(sequence) {
-  return sequence.split("").reverse().join("");
+
+function isotope_distribution(formulas, charge = 0) {
+  let list;
+  if (Array.isArray(formulas)) {
+    list = formulas_list.map((formula) =>
+      typeof formula == "string" ? [formula, 1] : formula
+    );
+  } else {
+    list = [formulas, 1];
+  }
+  let isotopes = [];
+
+  list.forEach(([formula, factor]) =>
+    isotopes.push(
+      emass
+        .calculate(formula, charge)
+        .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
+    )
+  );
+
+  return isotopes;
 }
