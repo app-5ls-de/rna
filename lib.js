@@ -97,6 +97,17 @@ const gc_content = (sequence) =>
   (get_component(sequence, "G") + get_component(sequence, "C")) /
   get_length(sequence);
 
+const get_formula = (sequence) =>
+  Object.keys(get_components(sequence))
+    .reduce(
+      (formula, key) =>
+        formula.add(cyclicMP[key], get_component(sequence, key)),
+      new MolecularFormula("")
+    )
+    // remove last cyclic Phosphate
+    .subtract("PO4H3")
+    .add("(H2O)2)").formula;
+
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
     ["G", "C"],
