@@ -59,17 +59,16 @@ window.MolecularFormula = class MolecularFormula {
 
     for (var key in composition) {
       if (!(key in this.composition)) {
+        console.info(
+          'Tried to remove "' + key + '" from "' + this.formula + '"'
+        );
         continue;
       } else {
         this.composition[key] -= composition[key] * multiplier;
         if (this.composition[key] <= 0) {
           if (this.composition[key] < 0)
             console.info(
-              'cant delete something that isnt there. Tried to remove "' +
-                key +
-                '" from "' +
-                this.formula +
-                '"'
+              'Tried to remove "' + key + '" from "' + this.formula + '"'
             );
           delete this.composition[key];
         }
