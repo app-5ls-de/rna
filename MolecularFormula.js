@@ -63,6 +63,14 @@ window.MolecularFormula = class MolecularFormula {
       } else {
         this.composition[key] -= composition[key] * multiplier;
         if (this.composition[key] <= 0) {
+          if (this.composition[key] < 0)
+            console.info(
+              'cant delete something that isnt there. Tried to remove "' +
+                key +
+                '" from "' +
+                this.formula +
+                '"'
+            );
           delete this.composition[key];
         }
       }
