@@ -1,3 +1,50 @@
+const modifications = [
+  {
+    short_name: "P",
+    name: "Phosphate",
+    add: "PO4H3",
+    subtract: "H2O",
+  },
+];
+
+const modifications5prime = [
+  {
+    short_name: "DP",
+    name: "Diphosphate",
+    add: "(PO4H3)2",
+    subtract: "(H2O)2",
+  },
+  {
+    short_name: "TP",
+    name: "Triphosphate",
+    add: "(PO4H3)3",
+    subtract: "(H2O)3",
+  },
+  {
+    short_name: "Cy5",
+    name: "Cyanine 5",
+    add: "C37H48N3O4P",
+    subtract: "",
+  },
+];
+
+const modifications3prime = [
+  {
+    short_name: "Pcyc",
+    name: "cyclic Monophosphate",
+    add: "PO4H3",
+    subtract: "(H2O)2",
+  },
+];
+
+// formulas of cyclic monophosphate Nucleotides
+const cyclicMP = {
+  G: "C10H12N5O7P",
+  C: "C9H12N3O7P",
+  A: "C10H12N5O6P",
+  U: "C9H11N2O8P",
+};
+
 const reverse = (sequence) => sequence.split("").reverse().join("");
 const normalize_sequence = (sequence) =>
   new MolecularFormula(sequence.toUpperCase()).getLongFormula();
