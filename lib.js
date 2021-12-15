@@ -94,9 +94,8 @@ const get_component = (sequence, component) =>
 const get_length = (sequence) => sum(Object.values(get_components(sequence)));
 
 const gc_content = (sequence) =>
-  ((get_component(sequence, "G") + get_component(sequence, "C")) /
-    total_length) *
-  100;
+  (get_component(sequence, "G") + get_component(sequence, "C")) /
+  get_length(sequence);
 
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
