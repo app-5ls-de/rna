@@ -131,7 +131,7 @@ function complement(sequence, copy_invalid_chars = true) {
 
 function melting_temperature(sequence) {
   let { A, U, G, C } = get_components(sequence);
-  if (get_length_of_sequence(sequence) < 14) {
+  if (get_length(sequence) < 14) {
     // Marmur formula
     return (A + U) * 2 + (G + C) * 4;
   } else {
