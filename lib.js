@@ -109,3 +109,29 @@ const get_isotopes_list = (
     .reduce((pv, cv) => [...pv, ...cv], [])
     .sort((a, b) => b.Abundance - a.Abundance)
     .filter(({ Abundance }) => Abundance >= limit);
+
+const sum = (array) => array.reduce((pv, cv) => pv + cv, 0);
+const get_components = (sequence) =>
+  new Proxy(new MolecularFormula(sequence).getComposition(), {
+    get: (target, p) => (target.hasOwnProperty(p) ? target[p] : 0),
+  });
+const get_component = (sequence, component) =>
+  get_components(sequence)[component];
+const get_length = (sequence) => sum(Object.values(get_components(sequence)));
+
+const gc_content = (sequence) =>
+  ((get_component(sequence, "G") + get_component(sequence, "C")) /
+    total_length) *
+  100;
+
+function melting_temperature(sequence) {
+  let { A, U, G, C } = get_components(sequence);
+  if (get_length_of_sequence(sequence) < 14) {
+    // Marmur formula
+    return (A + U) * 2 + (G + C) * 4;
+  } else {
+    // Wallace formula
+    return 64.9 + (41 * (G + C - 16.4)) / get_length(sequence);
+  }
+}
+
