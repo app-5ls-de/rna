@@ -42,22 +42,26 @@ window.MolecularFormula = class MolecularFormula {
     return elemList.reduce((pv, [atom, count]) => pv + atom.repeat(count), ""); // atom count
   }
 
-  addComposition(composition) {
+  addComposition(composition, multiplier = 1) {
+    if (!Number.isInteger(multiplier)) throw new Error("invalid multiplier");
+
     for (var key in composition) {
       if (!(key in this.composition)) {
-        this.composition[key] = composition[key];
+        this.composition[key] = composition[key] * multiplier;
       } else {
-        this.composition[key] += composition[key];
+        this.composition[key] += composition[key] * multiplier;
       }
     }
   }
 
-  subtractComposition(composition) {
+  subtractComposition(composition, multiplier = 1) {
+    if (!Number.isInteger(multiplier)) throw new Error("invalid multiplier");
+
     for (var key in composition) {
       if (!(key in this.composition)) {
         continue;
       } else {
-        this.composition[key] -= composition[key];
+        this.composition[key] -= composition[key] * multiplier;
         if (this.composition[key] <= 0) {
           delete this.composition[key];
         }
@@ -65,7 +69,7 @@ window.MolecularFormula = class MolecularFormula {
     }
   }
 
-  add(new_formula) {
+  add(new_formula, multiplier) {
     var composition = {};
     if (typeof new_formula === "string") {
       var expanded = this.cleanParantheses(new_formula);
@@ -73,14 +77,14 @@ window.MolecularFormula = class MolecularFormula {
     } else {
       composition = new_formula;
     }
-    this.addComposition(composition);
+    this.addComposition(composition, multiplier);
     this.simplifiedFormula = this.createSimplifiedFormula();
     this.formula = this.simplifiedFormula;
 
     return this;
   }
 
-  subtract(new_formula) {
+  subtract(new_formula, multiplier) {
     var composition = {};
     if (typeof new_formula === "string") {
       var expanded = this.cleanParantheses(new_formula);
@@ -88,7 +92,7 @@ window.MolecularFormula = class MolecularFormula {
     } else {
       composition = new_formula;
     }
-    this.subtractComposition(composition);
+    this.subtractComposition(composition, multiplier);
     this.simplifiedFormula = this.createSimplifiedFormula();
     this.formula = this.simplifiedFormula;
 
