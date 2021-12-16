@@ -153,6 +153,37 @@ function complement(sequence, copy_invalid_chars = true) {
   return sequence_complement_split.join("");
 }
 
+function create_derivates(
+  base_formula,
+  derivate_rules,
+  limit = 0.000001 /* PruneLimit */,
+  base_factor = 1,
+  depth = Infinity
+) {
+  // null cases:
+  // 1. depth == 0
+  // 2. factor < limit
+  // 3. base_formula does not contain derivate_rule.subtract
+
+  let formulas = [{ formula: base_formula, factor: base_factor }];
+  if (depth == 0) return formulas;
+
+  derivate_rules.forEach(({ add, subtract, factor }) => {
+    let f = base_factor * factor;
+    let mf = new MolecularFormula(base_formula); // create copy
+
+    if (!mf.contains(subtract)) return;
+    if (f < limit) return;
+
+    let formula = mf.add(add).subtract(subtract).formula;
+    formulas.push(
+      ...create_derivates(formula, derivate_rules, limit, f, depth - 1)
+    );
+  });
+
+  return formulas;
+}
+
 function melting_temperature(sequence) {
   let { A, U, G, C } = get_components(sequence);
   if (get_length(sequence) < 14) {
