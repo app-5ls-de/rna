@@ -232,6 +232,16 @@ window.MolecularFormula = class MolecularFormula {
     return this.createComposition(elemList);
   }
 
+  contains(formula) {
+    let composition = new MolecularFormula(formula).composition;
+
+    for (var key in composition) {
+      if (!(key in this.composition)) return false;
+      if (this.composition[key] < composition[key]) return false;
+    }
+    return true;
+  }
+
   isLowerCase(c) {
     return c === c.toLowerCase() && c !== c.toUpperCase();
   }
