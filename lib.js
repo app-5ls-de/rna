@@ -45,6 +45,19 @@ const cyclicMP = {
   U: "C9H11N2O8P",
 };
 
+const adducts = [
+  {
+    add: "Na",
+    subtract: "H",
+    factor: 0.4,
+  },
+  {
+    add: "K",
+    subtract: "H",
+    factor: 0.08,
+  },
+];
+
 const reverse = (sequence) => sequence.split("").reverse().join("");
 
 const normalize_sequence = (sequence) =>
