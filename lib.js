@@ -106,7 +106,7 @@ const get_formula = (sequence) =>
     )
     // remove last cyclic Phosphate
     .subtract("PO4H3")
-    .add("(H2O)2)").formula;
+    .add("(H2O)2)");
 
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
