@@ -1,7 +1,7 @@
 const input_1sequence = crel("#input_1sequence");
-const input_1rc = crel("#input_1rc");
-const input_1r = crel("#input_1r");
-const input_1c = crel("#input_1c");
+const output_1rc = crel("#output_1rc");
+const output_1r = crel("#output_1r");
+const output_1c = crel("#output_1c");
 
 const input_2g = crel("#input_2g");
 const input_2c = crel("#input_2c");
@@ -21,17 +21,17 @@ const list_input_2 = [
   input_2_3_Pcyc,
   input_2_3_P23,
 ];
-const input_2Tm = crel("#input_2Tm");
-const input_2GC = crel("#input_2GC");
-const input_2length = crel("#input_2length");
+const output_2Tm = crel("#output_2Tm");
+const output_2GC = crel("#output_2GC");
+const output_2length = crel("#output_2length");
 
 const input_3 = crel("#input_3");
-const input_3simplified = crel("#input_3simplified");
+const output_3formula = crel("#output_3formula");
 
 const input_4z = crel("#input_4z");
 const input_4fwhm = crel("#input_4fwhm");
-const input_4mass = crel("#input_4mass");
-const input_4avgmass = crel("#input_4avgmass");
+const output_4mass = crel("#output_4mass");
+const output_4avgmass = crel("#output_4avgmass");
 const input_4adducts = crel("#input_4adducts");
 const table_4body = crel("#table_4body");
 const plot_4 = crel("#plot_4");
@@ -59,7 +59,7 @@ list_input_2.forEach((element) => {
   crel(element, {
     on: {
       input: () => {
-        disable_inputs([input_1sequence, input_1rc, input_1r, input_1c]);
+        disable_inputs([input_1sequence, output_1rc, output_1r, output_1c]);
       },
     },
   });
@@ -126,9 +126,9 @@ function section1() {
   input_2a.value = composition.A || 0;
   input_2u.value = composition.U || 0;
 
-  input_1rc.value = reverse(complement(sequence));
-  input_1r.value = reverse(sequence);
-  input_1c.value = complement(sequence);
+  output_1rc.value = reverse(complement(sequence));
+  output_1r.value = reverse(sequence);
+  output_1c.value = complement(sequence);
 
   section2();
 }
@@ -180,9 +180,9 @@ function section2() {
     (total, current) => total + current,
     0
   );
-  input_2length.value = total_length.toString();
+  output_2length.value = total_length.toString();
   let gc_content = ((values.G + values.C) / total_length) * 100;
-  input_2GC.value = gc_content.toPrecision(3);
+  output_2GC.value = gc_content.toPrecision(3);
 
   let T_m;
   if (total_length < 14) {
@@ -193,7 +193,7 @@ function section2() {
     T_m = 64.9 + 41 * ((values.G + values.C - 16.4) / total_length);
   }
 
-  input_2Tm.value = T_m.toPrecision(2);
+  output_2Tm.value = T_m.toPrecision(2);
 
   let last_non_zero;
   for (const nucleotide in values) {
@@ -265,7 +265,7 @@ function section3() {
   try {
     formula = new MolecularFormula(sequence);
     let simplified = formula.getSimplifiedFormula();
-    input_3simplified.value = simplified;
+    output_3formula.value = simplified;
 
     formula.subtract({ H: charge });
     isotopes = emass.calculate(formula.composition, charge);
@@ -285,8 +285,8 @@ function section3() {
   let index_most_abundant = abundances.indexOf(Math.max(...abundances));
   let mass_most_abundant = isotopes[index_most_abundant].Mass;
 
-  input_4mass.value = mass_most_abundant.toPrecision(7);
-  input_4avgmass.value = avgmass.toPrecision(7);
+  output_4mass.value = mass_most_abundant.toPrecision(7);
+  output_4avgmass.value = avgmass.toPrecision(7);
 
   let childs = [];
   for (let i = 0; i < isotopes.length; i++) {
