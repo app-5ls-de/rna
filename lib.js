@@ -151,3 +151,97 @@ function melting_temperature(sequence) {
   }
 }
 
+function plot_isotopes(isotopes, target, FWHM = 0.05) {
+  let standardDeviation = FWHM / 2.3548;
+
+  let gaussians = isotopes.map(({ Mass, Abundance }) => ({
+    height: Abundance * 100,
+    mean: Mass,
+    standardDeviation,
+  }));
+
+  const gaussian = (x, mean, standardDeviation) =>
+    Math.exp(-Math.pow(x - mean, 2) / (2 * Math.pow(standardDeviation, 2)));
+
+  const fn = (scope) =>
+    gaussians.reduce(
+      (pv, { height, mean, standardDeviation }) =>
+        pv + gaussian(scope.x, mean, standardDeviation) * height,
+      0
+    );
+
+  const expand = (range, factor) => [
+    range[0] - (range[1] - range[0]) * factor,
+    range[1] + (range[1] - range[0]) * factor,
+  ];
+
+  let y_max = gaussians.reduce(
+    (pv, { mean }) => Math.max(pv, fn({ x: mean })),
+    0
+  );
+
+  let yDomain = expand([0, y_max], 0.05);
+
+  let xDomain = expand(
+    [
+      gaussians.reduce((pv, { mean }) => Math.min(pv, mean), 0) -
+        3 * standardDeviation,
+      gaussians.reduce((pv, { mean }) => Math.max(pv, mean), 0) -
+        3 * standardDeviation,
+    ],
+    0.1
+  );
+
+  let yAxis = {
+    label: "%",
+    domain: yDomain,
+  };
+  let xAxis = {
+    label: "[u]",
+    domain: xDomain,
+  };
+
+  let contentsBounds = target.getBoundingClientRect();
+  let width = 800;
+  let height = 500;
+  let ratio = contentsBounds.width / width;
+  width *= ratio;
+  height *= ratio;
+
+  let options = {
+    target,
+    width,
+    height,
+    grid: true,
+    xAxis,
+    yAxis,
+    data: [
+      {
+        graphType: "polyline",
+        fn,
+      },
+    ],
+  };
+
+  let instance = functionPlot(options);
+
+  return instance;
+  /*
+  let rect = target
+    .getElementsByClassName("function-plot")[0]
+    .getElementsByClassName("zoom-and-drag")[0];
+  let old_domain = options.yAxis.domain;
+  crel(rect, {
+    on: {
+      pointerout: () => {
+        old_domain = options.yAxis.domain;
+        options.yAxis.domain = [-y_padding, y_max + y_padding];
+        functionPlot(options);
+      },
+      pointerenter: () => {
+        options.yAxis.domain = old_domain;
+        functionPlot(options);
+      },
+    },
+  }); */
+}
