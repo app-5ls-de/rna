@@ -70,20 +70,22 @@ const is_sequence = (sequence) =>
   MolecularFormula.isValid(sequence) &&
   is_normalized_sequence(normalize_sequence(sequence));
 
-const get_isotopes = (formula, charge = 0, factor = 1, show_formula = false) =>
-  new MolecularFormula(formula).contains("H" + charge)
-    ? emass
-        .calculate(
-          new MolecularFormula(formula).subtract({ H: charge }).composition,
-          -charge
-        )
-        .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
-        .map((isotope) => {
-          if (show_formula)
-            isotope.formula = new MolecularFormula(formula).formula;
-          return isotope;
-        })
-    : new Error("charge is too high");
+function get_isotopes(formula, charge = 0, factor = 1, show_formula = false) {
+  let mf = new MolecularFormula(formula);
+  if (mf.contains("H" + charge)) throw new Error("charge is too high");
+
+  return emass
+    .calculate(
+      new MolecularFormula(mf) //copy to avoid mutation
+        .subtract({ H: charge }).composition,
+      -charge
+    )
+    .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
+    .map((isotope) => {
+      if (show_formula) isotope.formula = mf.formula;
+      return isotope;
+    });
+}
 
 const get_isotopes_list = (
   formulas,
