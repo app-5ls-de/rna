@@ -3,24 +3,11 @@ const output_1rc = crel("#output_1rc");
 const output_1r = crel("#output_1r");
 const output_1c = crel("#output_1c");
 
-const input_2g = crel("#input_2g");
-const input_2c = crel("#input_2c");
-const input_2a = crel("#input_2a");
-const input_2u = crel("#input_2u");
 const input_2Cy5 = crel("#input_2Cy5");
 const input_2_3_noP = crel("#input_2_3_noP");
 const input_2_3_Pcyc = crel("#input_2_3_Pcyc");
 const input_2_3_P23 = crel("#input_2_3_P23");
-const list_input_2 = [
-  input_2g,
-  input_2c,
-  input_2a,
-  input_2u,
-  input_2Cy5,
-  input_2_3_noP,
-  input_2_3_Pcyc,
-  input_2_3_P23,
-];
+const list_input_2 = [input_2Cy5, input_2_3_noP, input_2_3_Pcyc, input_2_3_P23];
 const output_2Tm = crel("#output_2Tm");
 const output_2GC = crel("#output_2GC");
 const output_2length = crel("#output_2length");
@@ -49,18 +36,8 @@ crel(input_1sequence, {
 list_input_2.forEach((element) => {
   crel(element, {
     on: {
-      keypress: (e) => onEnter(e, section2),
-      input: section2,
-    },
-  });
-});
-
-[input_2g, input_2c, input_2a, input_2u].forEach((element) => {
-  crel(element, {
-    on: {
-      input: () => {
-        disable_inputs([input_1sequence, output_1rc, output_1r, output_1c]);
-      },
+      keypress: (e) => onEnter(e, section1),
+      input: section1,
     },
   });
 });
@@ -114,28 +91,10 @@ function section1() {
   let formula = new MolecularFormula(sequence);
 
   let composition = formula.getComposition();
-  console.log(composition);
-
-  input_2g.value = composition.G || 0;
-  input_2c.value = composition.C || 0;
-  input_2a.value = composition.A || 0;
-  input_2u.value = composition.U || 0;
 
   output_1rc.value = reverse(complement(sequence));
   output_1r.value = reverse(sequence);
   output_1c.value = complement(sequence);
-
-  section2();
-}
-
-function section2() {
-  if (
-    !input_2g.validity.valid ||
-    !input_2c.validity.valid ||
-    !input_2a.validity.valid ||
-    !input_2u.validity.valid
-  )
-    return;
 
   let formula_Cy5 = "C37H48N3O4P";
 
@@ -164,12 +123,7 @@ function section2() {
   let prefix = "";
   let result = "";
   let suffix = "";
-  let values = {
-    G: parseInt(input_2g.value),
-    C: parseInt(input_2c.value),
-    A: parseInt(input_2a.value),
-    U: parseInt(input_2u.value),
-  };
+  let values = composition;
 
   let total_length = Object.values(values).reduce(
     (total, current) => total + current,
@@ -410,9 +364,5 @@ function gaussian(x, mean, standardDeviation) {
 }
 
 setTimeout(() => {
-  if (input_1sequence.value) {
-    section1();
-  } else {
-    section2();
-  }
+  if (input_1sequence.value) section1();
 }, 0);
