@@ -68,12 +68,13 @@ window.MolecularFormula = class MolecularFormula {
       } else {
         this.composition[key] -= composition[key] * multiplier;
         if (this.composition[key] <= 0) {
-          if (this.composition[key] < 0)
+          if (this.composition[key] < 0) {
             if (only_if_possible)
               throw new Error("subtraction is not possible");
           console.info(
             'Tried to remove "' + key + '" from "' + this.formula + '"'
           );
+          }
           delete this.composition[key];
         }
       }
