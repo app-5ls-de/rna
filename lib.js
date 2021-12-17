@@ -75,7 +75,7 @@ const get_isotopes = (formula, charge = 0, factor = 1, show_formula = false) =>
     ? emass
         .calculate(
           new MolecularFormula(formula).subtract({ H: charge }).composition,
-          charge
+          -charge
         )
         .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
         .map((isotope) => {
