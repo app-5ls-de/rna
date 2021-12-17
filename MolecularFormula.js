@@ -71,9 +71,9 @@ window.MolecularFormula = class MolecularFormula {
           if (this.composition[key] < 0) {
             if (only_if_possible)
               throw new Error("subtraction is not possible");
-          console.info(
-            'Tried to remove "' + key + '" from "' + this.formula + '"'
-          );
+            console.info(
+              'Tried to remove "' + key + '" from "' + this.formula + '"'
+            );
           }
           delete this.composition[key];
         }
