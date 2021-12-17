@@ -58,6 +58,7 @@ window.MolecularFormula = class MolecularFormula {
     if (!Number.isInteger(multiplier)) throw new Error("invalid multiplier");
 
     for (var key in composition) {
+      if (composition[key] == 0) continue;
       if (!(key in this.composition)) {
         console.info(
           'Tried to remove "' + key + '" from "' + this.formula + '"'
