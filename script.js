@@ -103,20 +103,15 @@ function disable_inputs(inputs, callback) {
 }
 
 function section1() {
+  input_1sequence.setCustomValidity(
+    is_sequence(input_1sequence.value) ? "" : "not valid"
+  );
+
   if (!input_1sequence.validity.valid) return;
 
   let sequence = input_1sequence.value.toUpperCase();
 
-  let formula;
-  try {
-    formula = new MolecularFormula(sequence);
-    input_1sequence.classList.remove("is-invalid");
-    input_1sequence.parentElement.classList.add("was-validated");
-  } catch (error) {
-    input_1sequence.classList.add("is-invalid");
-    input_1sequence.parentElement.classList.remove("was-validated");
-    return;
-  }
+  let formula = new MolecularFormula(sequence);
 
   let composition = formula.getComposition();
   console.log(composition);
