@@ -87,11 +87,7 @@ function get_isotopes(formula, charge = 0, factor = 1, show_formula = false) {
     });
 }
 
-const get_isotopes_list = (
-  formulas,
-  charge,
-  limit = 0.000001 /* PruneLimit */
-) =>
+const get_isotopes_list = (formulas, charge, limit = emass.cutoff) =>
   formulas
     .map((f) =>
       get_isotopes(f.formula || f, f.charge || charge, f.factor, true)
@@ -162,7 +158,7 @@ function complement(sequence, copy_invalid_chars = true) {
 function create_derivates(
   base_formula,
   derivate_rules,
-  limit = 0.000001 /* PruneLimit */,
+  limit = emass.cutoff,
   base_factor = 1,
   depth = Infinity
 ) {
