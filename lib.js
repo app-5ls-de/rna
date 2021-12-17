@@ -122,6 +122,10 @@ const get_formula = (sequence) =>
     .subtract("PO4H3")
     .add("(H2O)2)");
 
+const get_avgmass = (isotopes) =>
+  isotopes.reduce((pv, { Mass, Abundance }) => pv + Mass * Abundance, 0) /
+  isotopes.reduce((pv, { Abundance }) => pv + Abundance, 0);
+
 function complement(sequence, copy_invalid_chars = true) {
   let complement_pairs = [
     ["G", "C"],
