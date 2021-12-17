@@ -128,7 +128,6 @@ function section1() {
   output_2length.value = get_length(sequence).toString();
   output_2GC.value = (gc_content(sequence) * 100).toPrecision(3);
   output_2Tm.value = melting_temperature(sequence).toPrecision(2);
- console.log(get_formula(sequence))
 
   let last_non_zero;
   for (const nucleotide in values) {
