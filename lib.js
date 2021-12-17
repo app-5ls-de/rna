@@ -72,7 +72,7 @@ const is_sequence = (sequence) =>
 
 function get_isotopes(formula, charge = 0, factor = 1, show_formula = false) {
   let mf = new MolecularFormula(formula);
-  if (mf.contains("H" + charge)) throw new Error("charge is too high");
+  if (!mf.contains("H" + charge)) throw new Error("charge is too high");
 
   return emass
     .calculate(
