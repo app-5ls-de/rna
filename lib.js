@@ -71,16 +71,19 @@ const is_sequence = (sequence) =>
   is_normalized_sequence(normalize_sequence(sequence));
 
 const get_isotopes = (formula, charge = 0, factor = 1, show_formula = false) =>
-  emass
-    .calculate(
-      new MolecularFormula(formula).subtract({ H: charge }).composition,
-      charge
-    )
-    .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
-    .map((isotope) => {
-      if (show_formula) isotope.formula = new MolecularFormula(formula).formula;
-      return isotope;
-    });
+  new MolecularFormula(formula).contains("H" + charge)
+    ? emass
+        .calculate(
+          new MolecularFormula(formula).subtract({ H: charge }).composition,
+          charge
+        )
+        .map(({ Mass, Abundance }) => ({ Mass, Abundance: Abundance * factor }))
+        .map((isotope) => {
+          if (show_formula)
+            isotope.formula = new MolecularFormula(formula).formula;
+          return isotope;
+        })
+    : new Error("charge is too high");
 
 const get_isotopes_list = (
   formulas,
