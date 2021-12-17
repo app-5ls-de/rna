@@ -54,12 +54,13 @@ window.MolecularFormula = class MolecularFormula {
     }
   }
 
-  subtractComposition(composition, multiplier = 1) {
+  subtractComposition(composition, multiplier = 1, only_if_possible = false) {
     if (!Number.isInteger(multiplier)) throw new Error("invalid multiplier");
 
     for (var key in composition) {
       if (composition[key] == 0) continue;
       if (!(key in this.composition)) {
+        if (only_if_possible) throw new Error("subtraction is not possible");
         console.info(
           'Tried to remove "' + key + '" from "' + this.formula + '"'
         );
@@ -68,9 +69,11 @@ window.MolecularFormula = class MolecularFormula {
         this.composition[key] -= composition[key] * multiplier;
         if (this.composition[key] <= 0) {
           if (this.composition[key] < 0)
-            console.info(
-              'Tried to remove "' + key + '" from "' + this.formula + '"'
-            );
+            if (only_if_possible)
+              throw new Error("subtraction is not possible");
+          console.info(
+            'Tried to remove "' + key + '" from "' + this.formula + '"'
+          );
           delete this.composition[key];
         }
       }
@@ -92,7 +95,7 @@ window.MolecularFormula = class MolecularFormula {
     return this;
   }
 
-  subtract(new_formula, multiplier) {
+  subtract(new_formula, multiplier, only_if_possible) {
     var composition = {};
     if (typeof new_formula === "string") {
       var expanded = this.cleanParantheses(new_formula);
@@ -100,7 +103,7 @@ window.MolecularFormula = class MolecularFormula {
     } else {
       composition = new_formula;
     }
-    this.subtractComposition(composition, multiplier);
+    this.subtractComposition(composition, multiplier, only_if_possible);
     this.simplifiedFormula = this.createSimplifiedFormula();
     this.formula = this.simplifiedFormula;
 
