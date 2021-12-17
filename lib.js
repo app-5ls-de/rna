@@ -67,6 +67,7 @@ const is_normalized_sequence = (sequence) =>
   new RegExp("^[AUGC ]+$").test(sequence);
 
 const is_sequence = (sequence) =>
+  MolecularFormula.isValid(sequence) &&
   is_normalized_sequence(normalize_sequence(sequence));
 
 const get_isotopes = (formula, charge = 0, factor = 1, show_formula = false) =>

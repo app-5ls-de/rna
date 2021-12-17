@@ -254,3 +254,12 @@ window.MolecularFormula = class MolecularFormula {
     return /^\d+$/.test(c);
   }
 };
+
+MolecularFormula.isValid = function (formula) {
+  try {
+    new MolecularFormula(formula);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
