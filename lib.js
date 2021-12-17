@@ -96,8 +96,6 @@ const get_isotopes_list = (formulas, charge, limit = emass.cutoff) =>
     .sort((a, b) => b.Abundance - a.Abundance)
     .filter(({ Abundance }) => Abundance >= limit);
 
-const sum = (array) => array.reduce((pv, cv) => pv + cv, 0);
-
 const get_components = (sequence) =>
   new Proxy(new MolecularFormula(sequence).getComposition(), {
     get: (target, p) => (target.hasOwnProperty(p) ? target[p] : 0),
@@ -106,7 +104,8 @@ const get_components = (sequence) =>
 const get_component = (sequence, component) =>
   get_components(sequence)[component];
 
-const get_length = (sequence) => sum(Object.values(get_components(sequence)));
+const get_length = (sequence) =>
+  Object.values(get_components(sequence)).reduce((pv, cv) => pv + cv, 0);
 
 const gc_content = (sequence) =>
   (get_component(sequence, "G") + get_component(sequence, "C")) /
