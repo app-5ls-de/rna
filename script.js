@@ -88,132 +88,54 @@ function section1() {
 
   let sequence = input_1sequence.value.toUpperCase();
 
-  let formula = new MolecularFormula(sequence);
-
-  let composition = formula.getComposition();
-
   output_1rc.value = reverse(complement(sequence));
   output_1r.value = reverse(sequence);
   output_1c.value = complement(sequence);
 
-  let formula_Cy5 = "C37H48N3O4P";
+  let formula = get_formula(sequence);
 
-  let formulas_Pcyc = {
-    G: "C10H12N5O7P",
-    C: "C9H12N3O7P",
-    A: "C10H12N5O6P",
-    U: "C9H11N2O8P",
+  let modifier3prime = {
+    add: "",
+    subtract: "",
   };
+  if (input_2_3_Pcyc.checked) {
+    modifier3prime = [...modifications, ...modifications3prime].find(
+      (x) => x.short_name == "Pcyc"
+    );
+  } else if (input_2_3_P23.checked) {
+    modifier3prime = [...modifications, ...modifications3prime].find(
+      (x) => x.short_name == "P"
+    );
+  }
 
-  let formulas_noP = {};
-  Object.keys(formulas_Pcyc).forEach((nucleotide) => {
-    let formula = new MolecularFormula(formulas_Pcyc[nucleotide]);
-    formula.subtract("PO3");
-    formula.add("OH");
-    formulas_noP[nucleotide] = formula.getFormula();
-  });
+  formula.add(modifier3prime.add).subtract(modifier3prime.subtract);
 
-  let formulas_P235 = {};
-  Object.keys(formulas_Pcyc).forEach((nucleotide) => {
-    let formula = new MolecularFormula(formulas_Pcyc[nucleotide]);
-    formula.add("OH2");
-    formulas_P235[nucleotide] = formula.getFormula();
-  });
+  let modifier5prime = {
+    add: "",
+    subtract: "",
+  };
+  if (input_2Cy5.checked) {
+    modifier5prime = [...modifications, ...modifications5prime].find(
+      (x) => x.short_name == "Cy5"
+    );
+  }
+  formula.add(modifier5prime.add).subtract(modifier5prime.subtract);
 
-  let prefix = "";
-  let result = "";
-  let suffix = "";
-  let values = composition;
+  output_3formula.value = formula.formula;
 
   output_2length.value = get_length(sequence).toString();
   output_2GC.value = (gc_content(sequence) * 100).toPrecision(3);
   output_2Tm.value = melting_temperature(sequence).toPrecision(2);
 
-  let last_non_zero;
-  for (const nucleotide in values) {
-    if (Object.hasOwnProperty.call(values, nucleotide)) {
-      if (values[nucleotide] > 0) last_non_zero = nucleotide;
-    }
-  }
-
-  if (input_2_3_noP.checked) {
-    if (last_non_zero) {
-      values[last_non_zero] -= 1;
-      suffix = " (" + formulas_noP[last_non_zero] + ")";
-    }
-  } else if (input_2_3_P23.checked) {
-    if (last_non_zero) {
-      values[last_non_zero] -= 1;
-      suffix = " (" + formulas_P235[last_non_zero] + ")";
-    }
-  }
-
-  if (input_2Cy5.checked) {
-    if (last_non_zero) {
-      prefix = "(" + formula_Cy5 + ") ";
-    }
-  }
-
-  if (values.G > 0) {
-    result += "(" + formulas_Pcyc.G + ")";
-    if (values.G > 1) result += values.G;
-    result += " ";
-  }
-
-  if (values.C > 0) {
-    result += "(" + formulas_Pcyc.C + ")";
-    if (values.C > 1) result += values.C;
-    result += " ";
-  }
-
-  if (values.A > 0) {
-    result += "(" + formulas_Pcyc.A + ")";
-    if (values.A > 1) result += values.A;
-    result += " ";
-  }
-
-  if (values.U > 0) {
-    result += "(" + formulas_Pcyc.U + ")";
-    if (values.U > 1) result += values.U;
-    result += " ";
-  }
-  result = result.trim();
-
-  input_3.value = prefix + result + suffix;
-  section3();
-}
-
-function section3() {
-  if (
-    !input_3.validity.valid ||
-    !input_4z.validity.valid ||
-    !input_4fwhm.validity.valid
-  )
-    return;
-
-  let sequence = input_3.value;
   let charge = -1 * parseInt(input_4z.value) || 0;
 
-  let formula;
-  let isotopes;
-  try {
-    formula = new MolecularFormula(sequence);
-    let simplified = formula.getSimplifiedFormula();
-    output_3formula.value = simplified;
-
-    formula.subtract({ H: charge });
-    isotopes = emass.calculate(formula.composition, charge);
-
-    input_3.classList.remove("is-invalid");
-    input_3.parentElement.classList.add("was-validated");
-  } catch (error) {
-    input_3.classList.add("is-invalid");
-    input_3.parentElement.classList.remove("was-validated");
-    return;
-  }
+  //let formula;
+  let isotopes = get_isotopes(formula, charge);
 
   let avgmass = formula.getMass();
   if (charge > 0) avgmass = avgmass / charge - 1;
+
+  console.log(avgmass, get_avgmass(isotopes), get_avgmass2(formula, charge));
 
   let abundances = isotopes.map((isotope) => isotope.Abundance);
   let index_most_abundant = abundances.indexOf(Math.max(...abundances));
