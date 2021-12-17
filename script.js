@@ -125,24 +125,10 @@ function section1() {
   let suffix = "";
   let values = composition;
 
-  let total_length = Object.values(values).reduce(
-    (total, current) => total + current,
-    0
-  );
-  output_2length.value = total_length.toString();
-  let gc_content = ((values.G + values.C) / total_length) * 100;
-  output_2GC.value = gc_content.toPrecision(3);
-
-  let T_m;
-  if (total_length < 14) {
-    // Marmur formula
-    T_m = (values.A + values.U) * 2 + (values.G + values.C) * 4;
-  } else {
-    // Wallace formula
-    T_m = 64.9 + 41 * ((values.G + values.C - 16.4) / total_length);
-  }
-
-  output_2Tm.value = T_m.toPrecision(2);
+  output_2length.value = get_length(sequence).toString();
+  output_2GC.value = (gc_content(sequence) * 100).toPrecision(3);
+  output_2Tm.value = melting_temperature(sequence).toPrecision(2);
+ console.log(get_formula(sequence))
 
   let last_non_zero;
   for (const nucleotide in values) {
