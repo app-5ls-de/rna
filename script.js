@@ -12,7 +12,6 @@ const output_2Tm = crel("#output_2Tm");
 const output_2GC = crel("#output_2GC");
 const output_2length = crel("#output_2length");
 
-const input_3 = crel("#input_3");
 const output_3formula = crel("#output_3formula");
 
 const input_4z = crel("#input_4z");
@@ -42,23 +41,11 @@ list_input_2.forEach((element) => {
   });
 });
 
-crel(input_3, {
-  on: {
-    keypress: (e) =>
-      onEnter(e, () =>
-        disable_inputs([...list_input_2, input_1sequence], section3)
-      ),
-    input: () => {
-      disable_inputs([...list_input_2, input_1sequence], section3);
-    },
-  },
-});
-
 [input_4z, input_4fwhm, input_4adducts].forEach((element) => {
   crel(element, {
     on: {
       keypress: (e) => onEnter(e, section3),
-      input: section3,
+      input: section1,
     },
   });
 });
