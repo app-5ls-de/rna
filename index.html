@@ -78,7 +78,6 @@
   <body>
     <div>
       <div class="section container-fluid">
-        <h1 id="section1">1</h1>
         <h2>Sequence</h2>
 
         <div class="input-group mb-3 flex-nowrap was-validated">
@@ -255,45 +254,6 @@
             />
           </div>
         </div>
-      </div>
-
-      <hr />
-      <div class="section container-fluid mb-5">
-        <h1 id="section4">4</h1>
-        <h2>Isotope Distribution</h2>
-
-        <div class="row">
-          <div class="col-md-3 col-sm-6">
-            <div class="mb-3 was-validated">
-              <label for="input_4z" class="form-label">Charge</label>
-              <input
-                type="number"
-                class="form-control"
-                id="input_4z"
-                name="input_4z"
-                max="0"
-                step="1"
-                value="0"
-              />
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-6">
-            <div class="mb-3 was-validated">
-              <label for="input_4fwhm" class="form-label">FWHM</label>
-              <input
-                type="text"
-                class="form-control"
-                id="input_4fwhm"
-                name="input_4fwhm"
-                pattern="[0-9]*\.?[0-9]*"
-                value="0.05"
-                min="0.01"
-                max="10"
-              />
-            </div>
-          </div>
-        </div>
 
         <div class="row">
           <label
@@ -331,6 +291,43 @@
           </div>
         </div>
       </div>
+      <hr />
+
+      <div class="section container-fluid">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="mb-3 was-validated">
+              <label for="input_4z" class="form-label">Charge</label>
+              <input
+                type="number"
+                class="form-control"
+                id="input_4z"
+                name="input_4z"
+                max="0"
+                step="1"
+                value="0"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="mb-3 was-validated">
+              <label for="input_4fwhm" class="form-label">FWHM</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input_4fwhm"
+                name="input_4fwhm"
+                pattern="[0-9]*\.?[0-9]*"
+                value="0.05"
+                min="0.01"
+                max="10"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="container-fluid">
         <div class="row mb-3">
           <div class="col-lg-4">
