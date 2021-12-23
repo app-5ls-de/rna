@@ -1,4 +1,6 @@
 const input_1sequence = crel("#input_1sequence");
+const div_1_normalized = crel("#div_1_normalized");
+const output_1_normalized = crel("#output_1_normalized");
 const output_1rc = crel("#output_1rc");
 const output_1r = crel("#output_1r");
 const output_1c = crel("#output_1c");
@@ -63,9 +65,16 @@ function section1() {
 
   let sequence = input_1sequence.value.toUpperCase();
 
+  output_1c.value = complement(sequence);
+
+  if (!is_normalized_sequence(sequence)) {
+    div_1_normalized.style.display = "";
+    sequence = normalize_sequence(sequence);
+    output_1_normalized.value = sequence;
+  }
+
   output_1rc.value = reverse(complement(sequence));
   output_1r.value = reverse(sequence);
-  output_1c.value = complement(sequence);
 
   let formula = get_formula(sequence);
 
