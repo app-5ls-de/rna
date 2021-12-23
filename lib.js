@@ -270,6 +270,7 @@ function plot_isotopes(isotopes, target, FWHM = 0.05) {
       {
         graphType: "polyline",
         fn,
+        nSamples: 10000,
       },
     ],
   };
@@ -277,22 +278,4 @@ function plot_isotopes(isotopes, target, FWHM = 0.05) {
   let instance = functionPlot(options);
 
   return instance;
-  /*
-  let rect = target
-    .getElementsByClassName("function-plot")[0]
-    .getElementsByClassName("zoom-and-drag")[0];
-  let old_domain = options.yAxis.domain;
-  crel(rect, {
-    on: {
-      pointerout: () => {
-        old_domain = options.yAxis.domain;
-        options.yAxis.domain = [-y_padding, y_max + y_padding];
-        functionPlot(options);
-      },
-      pointerenter: () => {
-        options.yAxis.domain = old_domain;
-        functionPlot(options);
-      },
-    },
-  }); */
 }
