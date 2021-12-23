@@ -28,16 +28,16 @@ const inputs = [
   input_4adducts,
 ];
 
+inputs.forEach((input) => {
+  crel(input, { on: { input: section1 } });
+});
+
 crel(input_1sequence, {
   on: {
     blur: () => {
       input_1sequence.value = input_1sequence.value.toUpperCase();
     },
   },
-});
-
-inputs.forEach((input) => {
-  crel(input, { on: { input: section1 } });
 });
 
 crel(
@@ -121,5 +121,4 @@ function section1() {
     charge
   );
   plot_isotopes(isotopes_with_adducts, plot_4, FWHM);
-  return;
 }
