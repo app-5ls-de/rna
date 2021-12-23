@@ -125,9 +125,12 @@ function section1() {
   );
 
   let FWHM = parseFloat(input_4fwhm.value);
-  let isotopes_with_adducts = get_isotopes_list(
-    create_derivates(formula, adducts, 0.01),
-    charge
-  );
+  let isotopes_with_adducts = isotopes;
+
+  if (input_4adducts.checked)
+    isotopes_with_adducts = get_isotopes_list(
+      create_derivates(formula, adducts, 0.01),
+      charge
+    );
   plot_isotopes(isotopes_with_adducts, plot_4, FWHM);
 }
