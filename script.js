@@ -3,11 +3,8 @@ const output_1rc = crel("#output_1rc");
 const output_1r = crel("#output_1r");
 const output_1c = crel("#output_1c");
 
-const input_2Cy5 = crel("#input_2Cy5");
-const input_2_3_noP = crel("#input_2_3_noP");
-const input_2_3_Pcyc = crel("#input_2_3_Pcyc");
-const input_2_3_P23 = crel("#input_2_3_P23");
-const list_input_2 = [input_2Cy5, input_2_3_noP, input_2_3_Pcyc, input_2_3_P23];
+const input_modification3prime = crel("#input_modification3prime");
+const input_modification5prime = crel("#input_modification5prime");
 const output_2Tm = crel("#output_2Tm");
 const output_2GC = crel("#output_2GC");
 const output_2length = crel("#output_2length");
@@ -30,15 +27,6 @@ crel(input_1sequence, {
       input_1sequence.value = input_1sequence.value.toUpperCase();
     },
   },
-});
-
-list_input_2.forEach((element) => {
-  crel(element, {
-    on: {
-      keypress: (e) => onEnter(e, section1),
-      input: section1,
-    },
-  });
 });
 
 [input_4z, input_4fwhm, input_4adducts].forEach((element) => {
@@ -66,6 +54,21 @@ function disable_inputs(inputs, callback) {
   if (callback) callback();
 }
 
+[
+  [input_modification5prime, [...modifications, ...modifications5prime]],
+  [input_modification3prime, [...modifications, ...modifications3prime]],
+].map(([input_element, modifications_list]) => {
+  modifications_list.forEach((modification) => {
+    input_element.appendChild(
+      crel(
+        "option",
+        { value: modification.short_name },
+        modification.short_name
+      )
+    );
+  });
+});
+
 function section1() {
   input_1sequence.setCustomValidity(
     is_sequence(input_1sequence.value) ? "" : "not valid"
@@ -81,32 +84,19 @@ function section1() {
 
   let formula = get_formula(sequence);
 
-  let modifier3prime = {
-    add: "",
-    subtract: "",
-  };
-  if (input_2_3_Pcyc.checked) {
-    modifier3prime = [...modifications, ...modifications3prime].find(
-      (x) => x.short_name == "Pcyc"
+  if (input_modification3prime.value) {
+    let modifier = [...modifications, ...modifications3prime].find(
+      (x) => x.short_name == input_modification3prime.value
     );
-  } else if (input_2_3_P23.checked) {
-    modifier3prime = [...modifications, ...modifications3prime].find(
-      (x) => x.short_name == "P"
-    );
+    formula.add(modifier.add).subtract(modifier.subtract);
   }
 
-  formula.add(modifier3prime.add).subtract(modifier3prime.subtract);
-
-  let modifier5prime = {
-    add: "",
-    subtract: "",
-  };
-  if (input_2Cy5.checked) {
-    modifier5prime = [...modifications, ...modifications5prime].find(
-      (x) => x.short_name == "Cy5"
+  if (input_modification5prime.value) {
+    let modifier = [...modifications, ...modifications5prime].find(
+      (x) => x.short_name == input_modification5prime.value
     );
+    formula.add(modifier.add).subtract(modifier.subtract);
   }
-  formula.add(modifier5prime.add).subtract(modifier5prime.subtract);
 
   output_3formula.value = formula.formula;
 
