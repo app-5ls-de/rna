@@ -235,9 +235,9 @@ function plot_isotopes(isotopes, target, FWHM = 0.05) {
 
   let xDomain = expand(
     [
-      gaussians.reduce((pv, { mean }) => Math.min(pv, mean), 0) -
+      gaussians.reduce((pv, { mean }) => Math.min(pv, mean), Infinity) -
         3 * standardDeviation,
-      gaussians.reduce((pv, { mean }) => Math.max(pv, mean), 0) -
+      gaussians.reduce((pv, { mean }) => Math.max(pv, mean), -Infinity) -
         3 * standardDeviation,
     ],
     0.1
