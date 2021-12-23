@@ -19,55 +19,41 @@ const input_4adducts = crel("#input_4adducts");
 const table_4body = crel("#table_4body");
 const plot_4 = crel("#plot_4");
 
+const inputs = [
+  input_1sequence,
+  input_modification3prime,
+  input_modification5prime,
+  input_4z,
+  input_4fwhm,
+  input_4adducts,
+];
+
 crel(input_1sequence, {
   on: {
-    keypress: (e) => onEnter(e, section1),
-    input: section1,
     blur: () => {
       input_1sequence.value = input_1sequence.value.toUpperCase();
     },
   },
 });
 
-[input_4z, input_4fwhm, input_4adducts].forEach((element) => {
-  crel(element, {
-    on: {
-      keypress: (e) => onEnter(e, section3),
-      input: section1,
-    },
-  });
+inputs.forEach((input) => {
+  crel(input, { on: { input: section1 } });
 });
 
-function onEnter(e, callback) {
-  if (e.keyCode == 13) {
-    callback();
-    return false;
-  }
-  return true;
-}
+crel(
+  input_modification5prime,
+  [...modifications, ...modifications5prime].map((modification) =>
+    crel("option", { value: modification.short_name }, modification.short_name)
+  )
+);
 
-function disable_inputs(inputs, callback) {
-  inputs.forEach((element) => {
-    element.disabled = true;
-  });
+crel(
+  input_modification3prime,
+  [...modifications, ...modifications3prime].map((modification) =>
+    crel("option", { value: modification.short_name }, modification.short_name)
+  )
+);
 
-  if (callback) callback();
-}
-
-[
-  [input_modification5prime, [...modifications, ...modifications5prime]],
-  [input_modification3prime, [...modifications, ...modifications3prime]],
-].map(([input_element, modifications_list]) => {
-  modifications_list.forEach((modification) => {
-    input_element.appendChild(
-      crel(
-        "option",
-        { value: modification.short_name },
-        modification.short_name
-      )
-    );
-  });
-});
 
 function section1() {
   input_1sequence.setCustomValidity(
