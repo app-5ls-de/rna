@@ -210,7 +210,9 @@ function plot_isotopes(isotopes, target, FWHM = 0.05) {
   }));
 
   const gaussian = (x, mean, standardDeviation) =>
-    Math.exp(-Math.pow(x - mean, 2) / (2 * Math.pow(standardDeviation, 2)));
+    Math.abs(x - mean) > 10 * standardDeviation
+      ? 0
+      : Math.exp(-Math.pow(x - mean, 2) / (2 * Math.pow(standardDeviation, 2)));
 
   const fn = (scope) =>
     gaussians.reduce(
