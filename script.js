@@ -54,7 +54,6 @@ crel(
   )
 );
 
-
 function section1() {
   input_1sequence.setCustomValidity(
     is_sequence(input_1sequence.value) ? "" : "not valid"
@@ -101,21 +100,20 @@ function section1() {
   output_4mass.value = most_abundant.Mass.toPrecision(7);
   output_4avgmass.value = get_avgmass(isotopes).toPrecision(7);
 
-  let childs = [];
-  for (let i = 0; i < isotopes.length; i++) {
-    const isotope = isotopes[i];
-    let row;
-    childs.push(
-      (row = crel.tr(
+  table_4body.textContent = "";
+  isotopes.forEach((isotope, i) =>
+    table_4body.appendChild(
+      crel.tr(
         crel.th({ scope: "row" }, i.toString()),
         crel.td(isotope.Mass.toPrecision(7)),
-        crel.td((isotope.Abundance * 100).toPrecision(3))
-      ))
-    );
-    if (isotope.Abundance == most_abundant.Abundance)
-      row.classList.add("text-primary");
-  }
-  table_4body.replaceChildren(...childs);
+        crel.td((isotope.Abundance * 100).toPrecision(3)),
+        (this_el) => {
+          if (isotope.Abundance == most_abundant.Abundance)
+            this_el.classList.add("text-primary");
+        }
+      )
+    )
+  );
 
   let FWHM = parseFloat(input_4fwhm.value);
   let isotopes_with_adducts = get_isotopes_list(
