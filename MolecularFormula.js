@@ -3,9 +3,7 @@ window.MolecularFormula = class MolecularFormula {
     if (mf instanceof MolecularFormula) {
       this.formula = mf.formula;
     } else {
-      this.formula = mf.replace(/[⁰¹²³⁴-⁹₀-₉]/g, function (char) {
-        return char.charCodeAt(0).toString(16).slice(-1);
-      });
+      this.formula = mf;
     }
     var expanded = this.cleanParantheses(this.formula);
     this.composition = this.formulaToJson(expanded);
