@@ -5,7 +5,7 @@ secrets:
 sources:
   - git@git.sr.ht:~patrickhaussmann/rna
 tasks:
-  - mirror:
+  - mirror: |
       curl -LsS "https://raw.githubusercontent.com/PatrickHaussmann/dotfiles/5f20648c7a246f79a4f5f6923e8eeaa15897173f/.ssh/known_hosts_fixed" >> ~/.ssh/known_hosts
       echo -e "Host github.com\n    IdentityFile ~/.ssh/675020d0-54b5-4bc4-8629-70f92d947af7\n    IdentitiesOnly yes\n    BatchMode yes\n" >> ~/.ssh/config
       cd rna/
