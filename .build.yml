@@ -9,6 +9,4 @@ tasks:
       curl -LsS "https://raw.githubusercontent.com/PatrickHaussmann/dotfiles/5f20648c7a246f79a4f5f6923e8eeaa15897173f/.ssh/known_hosts_fixed" >> ~/.ssh/known_hosts
       echo -e "Host github.com\n    IdentityFile ~/.ssh/e137f559-6a19-4c76-b50b-91a295047540\n    IdentitiesOnly yes\n    BatchMode yes\n" >> ~/.ssh/config
       cd rna/
-      git fetch --all
-      git pull --all
-      git push --mirror git@github.com:app-5ls-de/rna.git
+      git push git@github.com:app-5ls-de/rna.git
